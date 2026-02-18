@@ -1,0 +1,37 @@
+/*
+======================================================================
+CREATE DATBASE AND SCHEMAS
+======================================================================
+SCRIPT PURPOSE : 
+      THISE SCRIPT CREATE A NEW DATABSE NAMED 'DATAWERHOUSE' AFTER CHECKING IF IT ALREDY EXISTS.
+       IF THE DATBASE EXIST, IT IS DROPPED AND RECREATED. ADDITIONALY THE SCRIPT SET UP THE THREE SCHEMAS 
+      WITHIN THE DATBASE : 'BRONZE' , 'SILVER' , 'GOLD' .   
+
+WARNING: 
+      RUNING THIS SCRIPT WILL DROP THE ENTIRE 'DATAWERHOUSE' DATABASE IF IT EXISTS.     
+      ALL DATA IN THE DATABASE IS PARMANTELY DELETED. PROCEED WITH CAUTION 
+      AND ENSURE YOU HAVE THE PROPER BACKUPS BEFOR RUNING THIS SCRIPTS.
+*/
+
+use master;
+go
+---drop and recreate the 'datawerhouse' databse
+IF EXISTS (SELECT 1 FROM SYS.DATABSE WHERE NAME = 'DATAWERHOUSE')  
+BEGIN
+     ALTER DATABSE DATEWERHOUSE SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE WEHOUSE ; 
+END;
+GO
+
+ ---CREATE THE 'DATEWAREHOUSE' DATBASE----- 
+create database datawerhouse
+use datawerhouse
+go
+
+---CREATE SCHEMAS
+  
+create schema bronze;
+go
+create schema silver;
+go
+create schema gold;
