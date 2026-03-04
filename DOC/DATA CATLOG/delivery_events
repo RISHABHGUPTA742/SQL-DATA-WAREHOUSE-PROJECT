@@ -1,0 +1,50 @@
+COLUMN              |   TYPE     |   COMMENT
+event_id            |  STRING    | A unique identifier for each delivery event recorded in the table, which helps in tracking and referencing specific events.
+LOAD_ID             |  STRING    | Represents the identifier for the load associated with the delivery event, linking it to the specific cargo being transported.
+TRIP_ID             |  STRING    | Denotes the identifier for the trip related to the delivery event, aiding in correlating multiple events occurring during a single trip.
+EVENT_TYPE          |  STRING    | Categorizes the type of event that occurred during the delivery process, such as arrival, departure, or delay.
+FACILITY_ID         |  STRING    | Unique identifier for the facility where the delivery event takes place, which may include warehouses or distribution centers 
+SCHEDULED_DATETIME  |  timestamp | Indicates the planned date and time for the delivery event, serving as a baseline for measuring performance.
+ACTUAL_DATETIME     |  timestamp | Records the actual date and time when the delivery event occurred, allowing for performance analysis against the scheduled time
+detention_minutes   |  BIGINT    | Captures the total number of minutes a delivery was delayed, providing insights into operational efficiency     
+on_time_flag        |  boolean   | Reflects whether the delivery event occurred as scheduled, with a flag indicating on-time performance versus delays.
+location_city       |  STRING    | Specifies the city where the delivery event is taking place, assisting in geographical analysis of delivery operations.
+location_state      |  STRING    | Identifies the state associated with the delivery event location, which can be useful for regional performance assessments. 
+   
+ ---- SMAPLE DATA------
+Are deliveries more on-time in specific states?
+------To determine if deliveries are more on-time in specific states, we need to analyze the on_time_flag column grouped by the location_state column in the datawerhouse1.bronze.delivery_events table. By calculating the percentage of on-time deliveries for each state, we can identify which states have better on-time performance. The following SQL query will provide this analysis:
+SELECT 
+    `location_state`, 
+    AVG(CASE WHEN `on_time_flag` THEN 1 ELSE 0 END) * 100 AS on_time_percentage
+FROM 
+    `datawerhouse1`.`bronze`.`delivery_events`
+GROUP BY 
+    `location_state`
+ORDER BY 
+    on_time_percentage DESC
+  
+---This query calculates the average of the on_time_flag (considering it as 1 for TRUE and 0 for FALSE) for each state, and multiplies it by 100 to get the percentage of deliveries that are on time. It then orders the results by this percentage in descending order, highlighting the states with the highest on-time delivery performance.
+
+-----RESULT------
+location_state|	on_time_percentage
+AZ	          | 66.42728904847397
+IL	          | 62.82993197278911
+NV	          | 62.70424836601307
+OH	          | 61.00254885301615
+FL	          | 58.62900447812608
+MO	          | 57.84232935036396
+TX	          | 57.342378292098964
+NC	          | 56.82283042758351
+PA	          | 55.922200980799595
+GA	          | 55.68280409508937
+TN	          | 55.16249153689912
+MN	          | 55.064667506008924
+OR	          | 53.75010617514652
+NY	          | 52.99933199732799
+WA	          | 52.4048266485384
+MI	          | 52.11075805719474
+CO	          | 49.93213897937025
+CA	          | 44.881537773804205
+IN	          | 44.199655765920824
+  
