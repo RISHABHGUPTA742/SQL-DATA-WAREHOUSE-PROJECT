@@ -1,0 +1,40 @@
+--Description
+--The table contains information about various facilities, including their names, types, and geographical locations. Useful for logistical analysis, operations management, or facility planning, it includes data on facility capacity and operating hours as well.
+
+COLUMN            |           TYPE          |       COMMENTS
+FACILITY_ID       |          STRING         |A unique identifier for each facility, which is essential for tracking and referencing specific facilities in analyses.
+FACILITY_NAME     |          STRING         |The official name of the facility, which helps in identifying and differentiating between multiple facilities.
+FACILITY_TYPE     |          STRING         |Indicates the kind of facility it is, such as warehouse, manufacturing plant, or distribution center, aiding in operational categorization.
+CITY              |          STRING         |Denotes the city in which the facility is located, useful for regional analysis and logistical planning.
+STATE             |          STRING         |Represents the state where the facility can be found, assisting in understanding geographical distribution and regulations.
+LATITUDE          |          DOUBLE         |The geographic latitude of the facility, providing precise location data for mapping and spatial analysis.
+LONGITUDE         |          DOUBLE         |The geographic longitude of the facility, which, along with latitude, allows for accurate mapping and location services.
+DOCK_DOORS        |          BIGINT         |The total number of dock doors available at the facility, critical for logistics concerning shipping and receiving operations.
+OPERATING_HOURS   |          STRING         | Specifies the hours during which the facility operates, vital for scheduling and operational efficiency.
+
+---SAMPLE DATA---
+What are the most common facility types?
+--To determine the most common facility types, 
+we need to analyze the facility_type column in the 
+datawerhouse1.bronze.facilities table and count the occurrences of each type. 
+This analysis is important for understanding the distribution of different 
+types of facilities within the organization, 
+which can inform decisions on resource allocation, 
+strategic planning, and operational focus. 
+Here is the SQL query that provides the counts of each facility type in 
+descending order of frequency:
+--SQL QUERY:
+   SELECT `facility_type`,
+       COUNT(*) AS `count`
+FROM `datawerhouse1`.`bronze`.`facilities`
+GROUP BY `facility_type`
+ORDER BY `count` DESC;
+
+---RESULT: 
+
+facility_type	            count
+Cross-Dock	                20
+Distribution Center	        13
+Terminal	                  10
+Warehouse	                   7
+
