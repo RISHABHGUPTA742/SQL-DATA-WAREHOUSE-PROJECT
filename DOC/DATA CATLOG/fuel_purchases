@@ -1,0 +1,45 @@
+--Description:
+The table contains records of fuel purchases associated with trucks and drivers. 
+It includes details such as purchase date, location, amount of fuel purchased, price per gallon, and total cost. 
+Use cases include analyzing fuel consumption trends, tracking expenses per trip or driver, and evaluating fuel pricing over time.
+
+COLUMN                  |      TYPE                   |      COMMENT
+FUEL_PURCHASE_ID        |     STRING                  |
+TRIP_ID                 |     STRING                  |
+TRUCK_ID                |     STRING                  |
+DRIVER_ID               |     STRING                  |
+PURCHASE_DATE           |     Timestamp               |
+LOCATION_CITY           |     STRING                  |
+LOCATION_STATE          |     STRING                  |
+GALLONS                 |     DOUBLE                  |
+PRICE_PER_GALLON        |     DOUBLE                  |
+TOTAL_COST              |     DOUBLE                  |
+FUEL_CARD_NUMBER        |     STRING                  |
+
+---SAMPLE DATA
+--To get the total fuel cost by driver for the top 5 drivers, while ensuring that the driver_id is not null, 
+we need to add a filter for the non-null driver_id values. This way, we can focus on the top drivers who have valid driver IDs.
+--SQL QUERY:
+    SELECT 
+    `driver_id`, 
+    SUM(`total_cost`) AS `total_fuel_cost`
+FROM 
+    `datawerhouse1`.`bronze`.`fuel_purchases`
+WHERE 
+    `driver_id` IS NOT NULL
+GROUP BY 
+    `driver_id`
+ORDER BY 
+    `total_fuel_cost` DESC
+LIMIT 5;
+
+---RESULT
+driver_id	total_fuel_cost
+DRV00108	834320.110000002
+DRV00051	827779.400000001
+DRV00087	826874.1000000025
+DRV00130	822158.4199999992
+DRV00078	815925.0899999999
+
+
+
