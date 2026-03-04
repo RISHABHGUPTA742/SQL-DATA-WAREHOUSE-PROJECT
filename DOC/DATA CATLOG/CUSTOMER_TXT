@@ -1,1 +1,31 @@
+ COLUMN                 |     TYPE       |    COMMENT  
+ customer_id            |    string      | A unique identifier assigned to each customer, facilitating the tracking and management of customer-related information.
+ customer_name          |    string      | The full name of the customer, which is essential for identification and communication purposes.
+ customer_type          |    string      | Indicates the classification of the customer, such as individual or business, which aids in segmentation and targeted marketing strategies.
+ credit_terms_days      |    bigint      | Represents the number of days allowed for payment after a purchase, which is important for monitoring cash flow and financial planning.
+ primary_freight_type   |    string      |  Identifies the main mode of transportation used for delivery to the customer, relevant for logistics and shipping efficiency.
+ account_status         |    string      |  Denotes the current status of the customer's account, helping in the assessment of account activity and overall relationship management.
+ contract_start_date    |    date        |  Marks the beginning date of the customer's contract, which is crucial for tracking contract duration and related obligations.
+annual_revenue_potential|   bigint       |  Estimates the total potential revenue generated from the customer over a year, useful for financial forecasting and strategic planning.
+
+
+----SAMPLE DATA-----
+
+
+What is the average annual revenue per customer_type?
+
+
+SELECT 
+    `customer_type`, 
+    AVG(`annual_revenue_potential`) AS avg_annual_revenue 
+FROM 
+    `datawerhouse1`.`bronze`.`customers_txt`
+GROUP BY 
+    `customer_type`
+
+|customer_type	|  avg_annual_revenue
+| Dedicated	    | 2604292.193548387
+| Contract	    | 2757294.933333333
+| Spot	        | 2688636.714285714
+
 
