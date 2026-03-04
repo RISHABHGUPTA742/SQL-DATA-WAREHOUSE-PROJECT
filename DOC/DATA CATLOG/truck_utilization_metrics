@@ -1,0 +1,36 @@
+Description
+The table contains metrics related to truck utilization over time.  
+It includes data on the number of trips completed, total miles driven, 
+revenue generated, average miles per gallon, maintenance events, 
+associated costs, downtime hours, and the overall utilization rate of each truck.
+This information can be used to analyze fleet performance, optimize routes, 
+assess maintenance needs, and understand revenue generation trends.
+
+COLUMN                     |                TYPE          |           COMMENT
+TRUCK_ID                   |             STRING           |
+MONTH                      |             DATE             |
+TRIP COMPLETED             |             BIGINT           |
+TOTAL_MILES                |             BIGINT           |
+TOTAL_REVENUE              |             DOUBLE           |
+AVERAGE_MPG                |             DOUBLE           |
+MANINTENANCE_EVENT         |             BIGINT           |
+MANINTENANCE_COST          |             DOUBLE           |
+DOWNTIME HOURS             |             DOUBLE           |
+utilization_rate           |             DOUBLE           |
+
+
+-----SAMPLE DATA
+What is the average utilization rate per truck?
+
+--SQL:
+      SELECT 
+    `truck_id`, 
+    AVG(`utilization_rate`) AS `average_utilization_rate` 
+FROM 
+    `datawerhouse1`.`bronze`.`truck_utilization_metrics` 
+GROUP BY 
+    `truck_id`
+
+---RESULT :
+truck_id	average_utilization_rate
+TRK00001	0.8671388888888889
