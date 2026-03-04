@@ -1,0 +1,35 @@
+Description
+The table contains data related to trips conducted by drivers using specific trucks and trailers. 
+Key information includes trip identifiers, scheduling details, actual distance traveled, duration of trips, 
+fuel consumption, and the status of the trip. This data can be utilized for analyzing driver performance, 
+optimizing routes, monitoring fuel efficiency, and understanding operational productivity.
+
+  COLUMN                    |              TYPE                  |      COMMENT      
+TRIP_ID                     |             STRING                 |
+LOAD_ID                     |             STRING                 |
+DRIVER_ID                   |             STRING                 |
+TRUCK_ID                    |             STRING                 |
+TRAILER_ID                  |             STRING                 |
+DISPATCH_DATE               |              DATE                  |
+ACTUAL_DISTANCE_MILES       |             BIGINT                 |
+ACTUAL_DURATION_HOURS       |             DOUBLE                 |
+FUEL_GALLONS_USED           |             DOUBLE                 |
+AVERAGE_MPG                 |             DOUBLE                 |
+IDLE_TIME_HOURS             |             DOUBLE                 |
+TRIP_STATUS                 |             STRING                 |
+
+----SAMPLE DATA
+Which trip had the highest fuel efficiency?
+---SQL:
+      SELECT `trip_id`, `average_mpg`
+FROM `datawerhouse1`.`bronze`.`trips`
+ORDER BY `average_mpg` DESC
+LIMIT 1
+----RESULT:
+        trip_id	    average_mpg
+      TRIP00000528	   7.5
+
+
+
+
+
