@@ -1,0 +1,32 @@
+Description
+--The table contains information about trucks including their identification, specifications, and operational details. It includes data such as the make, model year, acquisition date, and fuel type. This table can be useful for fleet management, monitoring vehicle status, and analyzing trends in acquisitions and usage.
+
+COLUMN                   |             TYPE             |          COMMENT
+truck_id                 |            string            |
+UNIT_NUMBER              |            BIGINT            |
+MAKE                     |            string            |
+MODEL_YEAR               |            BIGINT            |
+VIN                      |            string            |
+acquisition_date         |            DATE              |
+acquisition_MILEAGE      |            BIGINT            |
+FUEL_TYPE                |            STRING            |
+TANK_CAPACITY_GALLONS    |            BIGINT            |
+STATUS                   |            STRING            |
+HOME TERMINAL            |            STRING            |
+
+
+---SAMPLE DATA :
+What are the counts of trucks by make?
+--SQL:
+      SELECT `make`, COUNT(*) AS count
+FROM `datawerhouse1`.`bronze`.`trucks`
+GROUP BY `make`
+ORDER BY count DESC;
+--RESULT:
+      make	   count
+   Peterbilt	   24
+ Freightliner 	 22
+    Mack	       21
+    Volvo	       20
+International	   18
+  Kenworth	     15
