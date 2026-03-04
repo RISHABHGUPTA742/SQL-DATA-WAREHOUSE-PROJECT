@@ -1,0 +1,30 @@
+---Description
+The table contains data about various transportation routes, including details such as origin 
+and destination cities and states, distances, and associated rates. It can be used for 
+route optimization, cost analysis, and transit time estimation.
+
+COLUMN                          |              TYPE         |         COMMENTS   
+ROUTE_ID                        |             STRING        |A unique identifier for each transportation route in the dataset, allowing for easy reference and management of routes.
+ORIGIN_CITY                     |             STRING        |The city from which the transportation route begins, providing context for the starting point of the journey.
+ORIGIN_STATE                    |             STRING        |The state associated with the origin city, indicating the broader geographical area from which the route starts.
+DESTINATION_CITY                |             STRING        |The city at the end of the transportation route, representing the intended endpoint of the journey.
+DESTINATION_STATE               |             STRING        |The state associated with the destination city, helping to identify the geographical location where the route concludes.
+TYPICALY_DISTANCE_MILES         |             BIGINT        |The average distance of the route measured in miles, useful for calculating travel time and costs.
+BASE_RATE_PER_MILES             |             DOUBLE        |The standard rate charged for each mile traveled on the route, essential for pricing and cost analysis.
+FUEL_SURCHARGE_RATE             |             DOUBLE        |The additional charge applied to the base rate that accounts for fluctuating fuel prices, impacting overall transportation costs.
+TYPICAL_TRANSIT_DAYS            |             BIGINT        |The average number of days required to complete the journey along the route, providing insight into expected delivery times.
+
+--SAMPLE DATA
+What are the top 5 longest routes by distance?
+--SQL:
+     SELECT `route_id`, `origin_city`, `origin_state`, `destination_city`, `destination_state`, `typical_distance_miles`
+FROM `datawerhouse1`.`bronze`.`routes`
+ORDER BY `typical_distance_miles` DESC
+LIMIT 5;
+---RESULT:
+route_id 	origin_city	 origin_state	 destination_city	  destination_state	  typical_distance_miles
+RTE00025	Miami	         FL	            Seattle              WA	            3141
+RTE00016	Philadelphia	 PA	            Seattle	             WA	            2729
+RTE00044	Charlotte	     NC	            Portland	           OR	            2627
+RTE00042	Charlotte	     NC	            Seattle	             WA	            2623
+RTE00029	Seattle	       WA	            Charlotte	           NC	            2623
