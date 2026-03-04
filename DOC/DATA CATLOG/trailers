@@ -1,0 +1,26 @@
+Description
+The table contains information about trailers, including their identification, specifications, and current status. Use cases include tracking trailer acquisition, assessing operational status, and analyzing trailer characteristics such as type and length. This data can help in inventory management and logistical planning.
+
+COLUMN                      |              TYPE                 |     COMMENTS
+TRAILER_ID                  |              STRING               |
+TRAILER_NUMBER              |              BIGINT               |
+TRAILER_TYPE                |              STRING               |
+LENGTH FEET                 |              BIGINT               |
+MODEL YEAR                  |              BIGINT               |
+VIN                         |              STRING               |
+ACQUISITON_DATE             |               DATE                |
+STATUS                      |              STRING               |
+CURRENT_LOCATION            |              STRING               |
+
+
+--SAMPLE DATA 
+Oldest trailer by acquisition date?
+---SQL:
+        SELECT *
+FROM `datawerhouse1`.`bronze`.`trailers`
+ORDER BY `acquisition_date` ASC
+LIMIT 1;
+
+--RESULT :
+        trailer_id	trailer_number	trailer_type	length_feet	 model_year	      vin  	           acquisition_date	 status	current_location
+          TRL00158	     8973	          Dry Van	         53	      2017	   1BV408469701335979	       2015-01-06	   Active	 Portland
