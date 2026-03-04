@@ -1,0 +1,44 @@
+-----Description
+The maintenance_records table captures data on maintenance activities for trucks. 
+It includes details such as the type of maintenance performed, costs associated with labor and parts, 
+and timestamps of the activities. This data can be used to monitor truck maintenance schedules, 
+analyze maintenance costs over time, and assess the impact of downtime on operations.
+
+COLUMN                    |             TYPE             |               COMMENTS
+MAINTENANCE_ID            |            STRING            |A unique identifier for each maintenance record, allowing for the tracking and referencing of specific maintenance activities.
+TRUCK_ID                  |            STRING            |Identifies the specific truck that underwent maintenance, linking the maintenance record to the respective vehicle in the fleet
+MAINTENANCE_DATE          |             DATE             |Records the date when the maintenance activity was performed, crucial for scheduling and historical analysis
+MANINTENANCE_TYPE         |            STRING            |Describes the category of maintenance conducted, such as routine servicing, repairs, or inspections, providing insight into maintenance activities.
+odometer_reading          |            BIGINT            |Indicates the truck's odometer reading at the time of maintenance, useful for understanding the vehicle's usage and performance over time.
+LABOR_HOURS               |            DOUBLE            |Represents the total number of hours spent on labor for the maintenance activity, important for cost assessments and resource allocation.
+LABOR_COST                |            DOUBLE            |Details the total labor costs incurred during the maintenance activity, contributing to the analysis of expense management.
+PARTS_COST                |            DOUBLE            |Captures the costs associated with parts used in the maintenance, aiding in budgeting and financial forecasting.
+TOTAL_COST                |            DOUBLE            |Summarizes the overall cost of the maintenance activity by combining labor and parts costs, essential for comprehensive financial analysis.
+FACILITY_LOCATION         |            STRING            |Specifies the location where the maintenance was performed, providing context for logistical considerations and facility performance.
+DOWNTIME_HOURS            |            DOUBLE            |Tracks the total hours the truck was out of service due to maintenance, which is critical for evaluating operational efficiency.
+SERVICE_DESCRIPTION       |            STRING            |Offers a narrative or summary of the services performed during the maintenance, enhancing understanding of the specific tasks completed.
+
+
+
+------SAMPLE DATA :
+------How many maintenance activities per facility location?
+-------To determine the number of maintenance activities conducted at each facility location, 
+we will count the number of maintenance records grouped by the facility_location column. 
+This analysis is useful for understanding the distribution of maintenance activities across different locations, 
+which can help in resource planning and operational analysis.
+---SQL:
+        SELECT 
+    `facility_location`, 
+    COUNT(`maintenance_id`) AS maintenance_count 
+FROM 
+    `datawerhouse1`.`bronze`.`maintenance_records` 
+GROUP BY 
+    `facility_location`
+LIMIT 5;
+---RESULT :
+facility_location	|  maintenance_count
+   Kansas City	            106
+   Seattle	                114
+   Miami	                  122
+   Omaha	                  115
+   Denver	                  121
