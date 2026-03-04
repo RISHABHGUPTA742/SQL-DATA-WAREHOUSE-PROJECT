@@ -1,0 +1,52 @@
+---Description
+The table contains data on various loads associated with customers, including details such as load dates, 
+types of loads, weights, revenue, and associated charges. This data can be utilized for 
+analyzing logistics performance, understanding revenue generation through different routes, 
+and tracking load statuses across different booking types.
+
+COLUMN                     |               TYPE                       |         COMMENT
+LOAD_ID                    |             STRING                       | A unique identifier for each load entry, facilitating tracking and reference throughout the logistics process.
+CUSTOMER_ID                |             STRING                       |Represents the unique identifier for the customer associated with the load, which can be used for customer-specific analysis and reporting.
+ROUTE_ID                   |             STRING                       |Identifies the specific route taken for the load, allowing for analysis of route efficiency and performance.
+LOAD_DATE                  |             DATE                         |The date on which the load is scheduled or was executed, providing temporal context for the logistics activities.
+LOAD_TYPE                  |             STRING                       |Indicates the category or classification of the load, useful for distinguishing between different types of shipments or services.
+WEIGHT_IBS                 |             BIGINT                       |The total weight of the load measured in pounds, which is essential for understanding shipping capacity and costs.
+PIECES                     |             BIGINT                       |The number of individual items or packages included in the load, supporting inventory and shipment tracking.
+REVENUE                    |             DOUBLE                       |Represents the total revenue generated from the load, which is crucial for financial analysis and tracking profitability.
+FUEL_SURCHARGE             |             DOUBLE                       |The additional charge applied to the load to cover fluctuating fuel costs, aiding in accurate pricing and revenue calculations.
+accessorial_charges        |             BIGINT                       |Charges that apply for additional services related to the load beyond standard shipping fees, which are important for comprehensive billing.
+LOAD_STATUS                |             STRING                       |Describes the current status of the load, such as in transit or delivered, which is vital for operational monitoring.
+BOOKING_TYPE               |             STRING                      |Specifies the type of booking under which the load was arranged, helping in categorizing and analyzing booking performance.
+
+----SAMPLE DATA :
+---Which customers have the highest total revenue?
+---To identify which customers have the highest total revenue, 
+we need to aggregate the revenue data by customer. By summing up 
+the revenue for each customer_id, we can then rank the customers based on their total revenue. 
+This will allow us to see which customers contribute the most to the company's revenue.
+
+Here is the SQL query to find the customers with the highest total revenue:
+SELECT 
+    `customer_id`, 
+    SUM(`revenue`) AS total_revenue
+FROM 
+    `datawerhouse1`.`bronze`.`loads`
+GROUP BY 
+    `customer_id`
+ORDER BY 
+    total_revenue DESC
+LIMIT 10;
+
+----RESULT:
+
+customer_id	    total_revenue
+CUST00200	     1544419.810000001
+CUST00181	     1542321.0200000005
+CUST00077	     1521982.07
+CUST00097	     1487129.31
+CUST00122	     1483188.9000000006
+CUST00028	     1481527.8400000005
+CUST00110	     1479584.7300000004
+CUST00101	     1477854.3199999996
+CUST00124	     1472131.3100000003
+CUST00196	     1471132.9000000001
