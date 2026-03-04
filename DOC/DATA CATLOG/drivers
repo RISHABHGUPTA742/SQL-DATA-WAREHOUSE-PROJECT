@@ -1,0 +1,35 @@
+--Description:
+The table contains information about drivers, including personal details such as names, 
+dates of birth, and employment information. Potential use cases 
+include analyzing driver demographics, monitoring employment status, 
+and assessing experience levels. This data can help in workforce management 
+and compliance activities related to licensing.
+
+COLUMN              |       TYPE           |    COMMENTS 
+DRIVER_ID           |      STRING          |Unique identifier assigned to each driver in the system, facilitating the tracking and management of their records
+FIRST_NAME          |      STRING          |Represents the first name of the driver, used for identification and communication purposes.
+LAST_NAME           |      STRING          |Indicates the last name of the driver, essential for formal identification and record-keeping.
+HIRE_DATE           |      DATE            |The date when the driver was officially hired, important for tracking employment duration and eligibility for benefits.
+TERMINATION_DATE    |      DATE            |Specifies the date when the driver's employment ended, useful for analyzing turnover rates and employment history.
+LICENSE_NUMBER      |     STRING           |The official license number assigned to the driver, necessary for verifying driving qualifications and compliance
+LICENSE_STATE       |     STRING           |Indicates the state where the driver's license is issued, relevant for understanding regional licensing regulations.
+DATE_OF_BIRTH       |     DATE             |The birth date of the driver, important for age verification and assessing driver demographics.
+HOME_TERMINAL       |     STRING           |Identifies the primary terminal location where the driver is based, aiding in logistical planning and resource allocation.
+EMPLOYMENT_STATUS   |     STRING           |Describes the current employment status of the driver, crucial for workforce management and reporting.
+CDL_CLASS           |     STRING           |Represents the class of Commercial Driver's License held by the driver, determining the types of vehicles they are qualified to operate.
+YEARS_EXPERIENCE    |     BIGINT           | The total years of driving experience the driver has accumulated, useful for assessing skill levels and training needs. 
+
+---SAMPLE DATA----
+--To calculate the average years of experience for the drivers, we need to query the years_experience column in the datawerhouse1.bronze.drivers table. This metric is important for assessing the overall experience level of the driving workforce, which can impact safety, efficiency, and strategic planning. The following SQL query will compute and return the average years of experience:
+-SQL:
+    SELECT AVG(`years_experience`) AS average_years_experience
+FROM `datawerhouse1`.`bronze`.`drivers`;
+
+---RESULT---
+13.493333333333334
+
+
+
+
+
+
