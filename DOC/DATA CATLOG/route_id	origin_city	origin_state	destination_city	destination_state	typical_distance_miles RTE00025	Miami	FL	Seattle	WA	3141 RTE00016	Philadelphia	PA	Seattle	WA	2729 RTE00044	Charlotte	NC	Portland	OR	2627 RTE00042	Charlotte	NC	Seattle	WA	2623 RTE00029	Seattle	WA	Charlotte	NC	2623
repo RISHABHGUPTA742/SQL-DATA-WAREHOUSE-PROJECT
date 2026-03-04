@@ -1,0 +1,45 @@
+Description
+The table contains data on safety incidents related to vehicle trips. 
+It includes import  ant details such as the incident date, type, location, and associated costs. 
+This information can be used for analyzing incident trends, evaluating driver safety performance, 
+and assessing financial impacts related to vehicle and cargo damage.
+
+
+COLUMN                       |            TYPE           |         COMMENTS
+INCIDENT_ID                  |           STRING          |
+TRIP_ID                      |           STRING          |
+TRUCK_ID                     |           STRING          |
+DRIVER_ID                    |           STRING          |
+INCIDENT_DATE                |                           |
+INCIDENT_TYPE                |           STRING          |
+LOCATION_CITY                |           STRING          |
+LOCATION_STATE               |           STRING          |
+AT_FAULT_FLAG                |           BOOLEAN         |
+INJURY_FLAG                  |           BOOLEAN         |
+VEHICLE_DAMAGE_COST          |           DOUBLE          |
+CARGO DAMAGE COST            |           DOUBLE          |
+CLAIM AMOUNT                 |           DOUBLE          |
+PREVENTABLE_FLAG             |          BOOLEAN          |
+DESCRIPTION                  |          STRING           |
+
+----SAMPLE DATA 
+Which state has the highest incident costs?
+To determine which state has the highest incident costs, 
+we need to sum the costs of vehicle damage, cargo damage, and claim amounts 
+for each state, and then identify the state with the highest total cost. 
+This will provide a clear understanding of the financial impact of incidents across different states.
+--SQL:
+SELECT 
+    `location_state`,
+    SUM(`vehicle_damage_cost` + `cargo_damage_cost` + `claim_amount`) AS total_incident_cost
+FROM 
+    `datawerhouse1`.`bronze`.`safety_incidents`
+GROUP BY 
+    `location_state`
+ORDER BY 
+    total_incident_cost DESC
+LIMIT 1
+---RESULT:
+location_state	total_incident_cost
+      TX	        536881.14
+
