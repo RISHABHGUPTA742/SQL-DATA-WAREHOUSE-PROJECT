@@ -1,0 +1,2681 @@
+{
+  "datasets": [
+    {
+      "name": "57634930",
+      "displayName": "Aggregate Facility Revenue and Mileage Summary",
+      "queryLines": [
+        ""
+      ]
+    },
+    {
+      "name": "70352450",
+      "displayName": "customers_txt",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.customers_txt"
+      ]
+    },
+    {
+      "name": "8837bf21",
+      "displayName": "delivery_events",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.delivery_events"
+      ]
+    },
+    {
+      "name": "4efe6f57",
+      "displayName": "driver_monthly_metrics (with first name)",
+      "queryLines": [
+        "SELECT d.first_name, SUM(m.total_revenue) AS total_revenue FROM datawerhouse1.gold.driver_monthly_metrics m JOIN datawerhouse1.gold.drivers d ON m.driver_id = d.driver_id GROUP BY d.first_name"
+      ]
+    },
+    {
+      "name": "ecafaace",
+      "displayName": "drivers",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.drivers"
+      ]
+    },
+    {
+      "name": "46b81fce",
+      "displayName": "facilities",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.facilities"
+      ]
+    },
+    {
+      "name": "0868b571",
+      "displayName": "fuel_purchases",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.fuel_purchases"
+      ]
+    },
+    {
+      "name": "35fbf725",
+      "displayName": "loads",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.loads"
+      ]
+    },
+    {
+      "name": "8c1747a6",
+      "displayName": "maintenance_records",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.maintenance_records"
+      ]
+    },
+    {
+      "name": "cb5a6851",
+      "displayName": "routes",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.routes"
+      ]
+    },
+    {
+      "name": "243471e6",
+      "displayName": "safety_incidents",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.safety_incidents"
+      ]
+    },
+    {
+      "name": "e9807a07",
+      "displayName": "trailers",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.trailers"
+      ]
+    },
+    {
+      "name": "533f339a",
+      "displayName": "trips",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.trips"
+      ]
+    },
+    {
+      "name": "c6be806e",
+      "displayName": "truck_utilization_metrics",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.truck_utilization_metrics"
+      ]
+    },
+    {
+      "name": "5a52c5a4",
+      "displayName": "trucks",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.trucks"
+      ]
+    },
+    {
+      "name": "64c3844f",
+      "displayName": "Fuel Cost by Home Terminal",
+      "queryLines": [
+        "SELECT d.home_terminal, SUM(f.total_cost) AS total_fuel_cost FROM datawerhouse1.gold.drivers d JOIN datawerhouse1.gold.fuel_purchases f ON d.driver_id = f.driver_id GROUP BY d.home_terminal"
+      ]
+    },
+    {
+      "name": "87a9567d",
+      "displayName": "driver_monthly_metrics (with first name, idle hours)",
+      "queryLines": [
+        "SELECT d.first_name, AVG(m.average_idle_hours) AS avg_idle_hours FROM datawerhouse1.gold.driver_monthly_metrics m JOIN datawerhouse1.gold.drivers d ON m.driver_id = d.driver_id GROUP BY d.first_name"
+      ]
+    },
+    {
+      "name": "59648bf3",
+      "displayName": "driver_monthly_metrics",
+      "queryLines": [
+        "SELECT * FROM datawerhouse1.gold.driver_monthly_metrics"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "37f89ad4",
+      "displayName": "Strategic Fleet Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Revenue",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_revenue)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-maintenance-cost",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(maintenance_cost)",
+                      "expression": "SUM(`maintenance_cost`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "TOTAL MAINTENANCE COST"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(maintenance_cost)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-downtime-hours",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(downtime_hours)",
+                      "expression": "SUM(`downtime_hours`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Downtime Hours",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(downtime_hours)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 1,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-utilization-rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(utilization_rate)",
+                      "expression": "SUM(`utilization_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "TOTAL UTILIZATION RATE"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(utilization_rate)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 1,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-miles",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(total_miles)",
+                      "expression": "SUM(`total_miles`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "TOTAL MILES"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_miles)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "minimum-trips-truck",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "min(trips_completed)",
+                      "expression": "MIN(`trips_completed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Minimum trips completed by truck",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "min(trips_completed)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 3,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-trips-completed-1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "sum(average_mpg)",
+                      "expression": "SUM(`average_mpg`)"
+                    },
+                    {
+                      "name": "sum(trips_completed)",
+                      "expression": "SUM(`trips_completed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Trips Completed & average_mpg",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(trips_completed)"
+                },
+                "target": {
+                  "fieldName": "sum(average_mpg)",
+                  "change": {
+                    "type": "percent"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 3,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "11da0924",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c6be806e",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "sum(utilization_rate)",
+                      "expression": "SUM(`utilization_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "frame": {
+                "title": "Monthly Truck Utilization Rate",
+                "showTitle": true
+              },
+              "widgetType": "forecast-line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "original": {
+                    "fieldName": "sum(utilization_rate)"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "95901a7b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "termination_date",
+                      "expression": "`termination_date`"
+                    },
+                    {
+                      "name": "first_name",
+                      "expression": "`first_name`"
+                    },
+                    {
+                      "name": "years_experience",
+                      "expression": "`years_experience`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "termination_date",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "first_name"
+                      }
+                    ]
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "years_experience"
+                      }
+                    ]
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "count-of-license-states",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "count(license_state)",
+                      "expression": "COUNT(`license_state`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Count of License States",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(license_state)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 19,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "cdl-class-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "countdistinct(license_state)",
+                      "expression": "COUNT(DISTINCT `license_state`)"
+                    },
+                    {
+                      "name": "cdl_class",
+                      "expression": "`cdl_class`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "CDL Class Count",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "cdl_class"
+                },
+                "target": {
+                  "fieldName": "countdistinct(license_state)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 19,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "79b3d9d4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "cdl_class",
+                      "expression": "`cdl_class`"
+                    },
+                    {
+                      "name": "home_terminal",
+                      "expression": "`home_terminal`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "CDL Class Count by State",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "home_terminal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "displayName": "Driver Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "cdl_class",
+                  "displayName": "CDL Class",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "295abbd5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "first_name",
+                      "expression": "`first_name`"
+                    },
+                    {
+                      "name": "max(years_experience)",
+                      "expression": "MAX(`years_experience`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`first_name` = 'Robert'"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Max Years of Experience (Robert)",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(years_experience)",
+                  "displayName": "max(years_experience)"
+                },
+                "target": {
+                  "fieldName": "first_name"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 19,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "61920929",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "64c3844f",
+                  "fields": [
+                    {
+                      "name": "home_terminal",
+                      "expression": "`home_terminal`"
+                    },
+                    {
+                      "name": "total_fuel_cost",
+                      "expression": "`total_fuel_cost`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "rowsPerPage": 25,
+              "frame": {
+                "title": "Home Terminals by Fuel Cost (Desc)",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "home_terminal",
+                    "displayName": "Home Terminal"
+                  },
+                  {
+                    "fieldName": "total_fuel_cost",
+                    "displayName": "Total Fuel Cost"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 19,
+            "width": 5,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "number-of-drivers-by-license-state-home-terminal",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ecafaace",
+                  "fields": [
+                    {
+                      "name": "home_terminal",
+                      "expression": "`home_terminal`"
+                    },
+                    {
+                      "name": "license_state",
+                      "expression": "`license_state`"
+                    },
+                    {
+                      "name": "count(driver_id)",
+                      "expression": "COUNT(`driver_id`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Number of Drivers by License State and Home Terminal",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "license_state",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "count(driver_id)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "home_terminal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 21,
+            "width": 7,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "82ee6919",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block\">DRIVERS</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "88cb6bef",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">CUSTOMER TXT</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 26,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "customer-types-by-customer-name",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "70352450",
+                  "fields": [
+                    {
+                      "name": "customer_name",
+                      "expression": "`customer_name`"
+                    },
+                    {
+                      "name": "count(customer_type)",
+                      "expression": "COUNT(`customer_type`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Customer Types by Customer Name",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "customer_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(customer_type)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 27,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "maximum-credit-term-days",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "70352450",
+                  "fields": [
+                    {
+                      "name": "max(annual_revenue_potential)",
+                      "expression": "MAX(`annual_revenue_potential`)"
+                    },
+                    {
+                      "name": "max(credit_term_days)",
+                      "expression": "MAX(`credit_term_days`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Maximum Credit Term Days COMPARISON TO MAX ANNUAL REVENUE POTENTIAL",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(credit_term_days)"
+                },
+                "target": {
+                  "fieldName": "max(annual_revenue_potential)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 31,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "e92f2d97",
+            "queries": [
+              {
+                "name": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dc8761d19bc561653cda5eafc_primary_freight_type",
+                "query": {
+                  "datasetName": "70352450",
+                  "fields": [
+                    {
+                      "name": "primary_freight_type",
+                      "expression": "`primary_freight_type`"
+                    },
+                    {
+                      "name": "primary_freight_type_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "primary_freight_type",
+                    "queryName": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dc8761d19bc561653cda5eafc_primary_freight_type"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 31,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "primary-freight-type-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "70352450",
+                  "fields": [
+                    {
+                      "name": "monthly(contract_start_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `contract_start_date`)"
+                    },
+                    {
+                      "name": "primary_freight_type",
+                      "expression": "`primary_freight_type`"
+                    }
+                  ],
+                  "disaggregated": true,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "DATE_TRUNC(\"MONTH\", `contract_start_date`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "CONTRACT START DATE VALUE PRIMARY FREIGHT TYPE"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "primary_freight_type"
+                },
+                "period": {
+                  "fieldName": "monthly(contract_start_date)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 31,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "count-of-customer-types",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "70352450",
+                  "fields": [
+                    {
+                      "name": "count(customer_type)",
+                      "expression": "COUNT(`customer_type`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Count of Customer Types",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(customer_type)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 32,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "2e01c3a3",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">TRUCK UTILIZATION MATRICS</span>\n",
+                "<p>&nbsp;</p>\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 7,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "ea32fe9e",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">TRUCKS MATRICS</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 34,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "total-tank-capacity-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "count(tank_capacity_gallons)",
+                      "expression": "COUNT(`tank_capacity_gallons`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Tank Capacity Count",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(tank_capacity_gallons)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 35,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-unit-number",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "sum(unit_number)",
+                      "expression": "SUM(`unit_number`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Unit Number",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(unit_number)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 35,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "home-terminal-acquisition-mileage",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "acquisition_mileage",
+                      "expression": "`acquisition_mileage`"
+                    },
+                    {
+                      "name": "home_terminal",
+                      "expression": "`home_terminal`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "HOME TERMINAL BY ACQUISITION MILEAGE"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "home_terminal"
+                },
+                "target": {
+                  "fieldName": "acquisition_mileage"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 35,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c9f30257",
+            "queries": [
+              {
+                "name": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dd8ba1178a8429f895e505201_home_terminal",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "home_terminal",
+                      "expression": "`home_terminal`"
+                    },
+                    {
+                      "name": "home_terminal_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "home_terminal",
+                    "queryName": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dd8ba1178a8429f895e505201_home_terminal"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 35,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "count-of-makes",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "make",
+                      "expression": "`make`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": " Makes",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "make"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 35,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "count-of-trucks-by-make",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "make",
+                      "expression": "`make`"
+                    },
+                    {
+                      "name": "sum(tank_capacity_gallons)",
+                      "expression": "SUM(`tank_capacity_gallons`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Count of Trucks by Make",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "make",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(tank_capacity_gallons)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "make",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 37,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "truck-fleet-information",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a52c5a4",
+                  "fields": [
+                    {
+                      "name": "truck_id",
+                      "expression": "`truck_id`"
+                    },
+                    {
+                      "name": "unit_number",
+                      "expression": "`unit_number`"
+                    },
+                    {
+                      "name": "make",
+                      "expression": "`make`"
+                    },
+                    {
+                      "name": "model_year",
+                      "expression": "`model_year`"
+                    },
+                    {
+                      "name": "acquisition_date",
+                      "expression": "`acquisition_date`"
+                    },
+                    {
+                      "name": "acquisition_mileage",
+                      "expression": "`acquisition_mileage`"
+                    },
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Truck Fleet Information",
+                "showTitle": true
+              },
+              "rowsPerPage": 25,
+              "displayRowNumbers": false,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "truck_id"
+                  },
+                  {
+                    "fieldName": "unit_number"
+                  },
+                  {
+                    "fieldName": "make"
+                  },
+                  {
+                    "fieldName": "model_year"
+                  },
+                  {
+                    "fieldName": "acquisition_date"
+                  },
+                  {
+                    "fieldName": "acquisition_mileage"
+                  },
+                  {
+                    "fieldName": "status"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 41,
+            "width": 12,
+            "height": 4
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "c050034e",
+      "displayName": "Global Filters",
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "bea50bca",
+      "displayName": "FLEET DISPATCH & EVENT MONITORING",
+      "layout": [
+        {
+          "widget": {
+            "name": "b334bbc4",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">DELIVERY EVENTS</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "a5497017",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8837bf21",
+                  "fields": [
+                    {
+                      "name": "event_type",
+                      "expression": "`event_type`"
+                    },
+                    {
+                      "name": "sum(delay_minutes)",
+                      "expression": "SUM(`delay_minutes`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Delivery Events by Event Type (Delay Minutes)",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "event_type",
+                  "displayName": "Event Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(delay_minutes)",
+                  "displayName": "Total Delay Minutes",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "event_type",
+                  "displayName": "Event Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "5006e27a",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8837bf21",
+                  "fields": [
+                    {
+                      "name": "event_type",
+                      "expression": "`event_type`"
+                    },
+                    {
+                      "name": "location_city",
+                      "expression": "`location_city`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Event Type by Location City",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "location_city",
+                  "displayName": "Location City",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "displayName": "Event Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "event_type",
+                  "displayName": "Event Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "f89503e4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8837bf21",
+                  "fields": [
+                    {
+                      "name": "yearly(scheduled_datetime)",
+                      "expression": "DATE_TRUNC(\"YEAR\", `scheduled_datetime`)"
+                    },
+                    {
+                      "name": "sum(delay_minutes)",
+                      "expression": "SUM(`delay_minutes`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Delay Minutes Trend by Year",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "yearly(scheduled_datetime)",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(delay_minutes)",
+                  "displayName": "Total Delay Minutes",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "2960a601",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8837bf21",
+                  "fields": [
+                    {
+                      "name": "location_city",
+                      "expression": "`location_city`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top Locations by Event Count",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "location_city",
+                  "displayName": "Location City",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "displayName": "Event Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "location_city",
+                  "displayName": "Location City",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 17,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "64226d63",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">TRIPS</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 22,
+            "width": 5,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "total-idle-time",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "533f339a",
+                  "fields": [
+                    {
+                      "name": "avg(idle_time_hours)",
+                      "expression": "AVG(`idle_time_hours`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "AVG Idle Time",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(idle_time_hours)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 23,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "avg-actual-distance-miles",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "533f339a",
+                  "fields": [
+                    {
+                      "name": "avg(actual_distance_miles)",
+                      "expression": "AVG(`actual_distance_miles`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "AVG ACTUAL DISTANCE MILES"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(actual_distance_miles)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 23,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "5d7754e3",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "533f339a",
+                  "fields": [
+                    {
+                      "name": "trip_status",
+                      "expression": "`trip_status`"
+                    },
+                    {
+                      "name": "actual_duration_hours",
+                      "expression": "`actual_duration_hours`"
+                    },
+                    {
+                      "name": "dispatch_date",
+                      "expression": "`dispatch_date`"
+                    },
+                    {
+                      "name": "idle_time_hours",
+                      "expression": "`idle_time_hours`"
+                    },
+                    {
+                      "name": "fuel_gallons_used",
+                      "expression": "`fuel_gallons_used`"
+                    },
+                    {
+                      "name": "average_mpg",
+                      "expression": "`average_mpg`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "trip_status"
+                  },
+                  {
+                    "fieldName": "actual_duration_hours"
+                  },
+                  {
+                    "fieldName": "dispatch_date"
+                  },
+                  {
+                    "fieldName": "idle_time_hours"
+                  },
+                  {
+                    "fieldName": "fuel_gallons_used"
+                  },
+                  {
+                    "fieldName": "average_mpg"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 25,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "d9d0fc90",
+            "queries": [
+              {
+                "name": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dd5bd1f66880653a74c6a9ee5_yearly(dispatch_date)",
+                "query": {
+                  "datasetName": "533f339a",
+                  "fields": [
+                    {
+                      "name": "yearly(dispatch_date)",
+                      "expression": "DATE_TRUNC(\"YEAR\", `dispatch_date`)"
+                    },
+                    {
+                      "name": "yearly(dispatch_date)_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "yearly(dispatch_date)",
+                    "displayName": "YEARLY(dispatch_date)",
+                    "queryName": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dd5bd1f66880653a74c6a9ee5_yearly(dispatch_date)"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 23,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "669c6951",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "533f339a",
+                  "fields": [
+                    {
+                      "name": "dispatch_date",
+                      "expression": "`dispatch_date`"
+                    },
+                    {
+                      "name": "sum(actual_distance_miles)",
+                      "expression": "SUM(`actual_distance_miles`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Actual Distance Miles by Dispatch Date",
+                "showTitle": true
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "dispatch_date",
+                  "displayName": "Dispatch Date",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(actual_distance_miles)",
+                  "displayName": "Total Actual Distance Miles",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 31,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "143579d3",
+      "displayName": "FLEET PERFORMANCE & CONSUMPTION",
+      "layout": [
+        {
+          "widget": {
+            "name": "a6cd08e2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "4efe6f57",
+                  "fields": [
+                    {
+                      "name": "first_name",
+                      "expression": "`first_name`"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top 5 Drivers by Total Revenue (by First Name)",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "first_name",
+                  "displayName": "First Name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue)",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 0
+                    },
+                    "abbreviation": "none"
+                  },
+                  "displayName": "Total Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "first_name",
+                  "displayName": "First Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "total-fuel-gallon-sum",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59648bf3",
+                  "fields": [
+                    {
+                      "name": "sum(total_fuel_gallons)",
+                      "expression": "SUM(`total_fuel_gallons`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "TOTAL FUEL GALLON SUM"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_fuel_gallons)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-on-time-delivery-rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59648bf3",
+                  "fields": [
+                    {
+                      "name": "sum(on_time_delivery_rate)",
+                      "expression": "SUM(`on_time_delivery_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total On-Time Delivery Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(on_time_delivery_rate)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 13,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "max-trip-completed",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59648bf3",
+                  "fields": [
+                    {
+                      "name": "max(trips_completed)",
+                      "expression": "MAX(`trips_completed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "MAX TRIP COMPLETED"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(trips_completed)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 13,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "df9a0ad6",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">DRIVER MONTHLY METRICS </span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "bc01efe2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "87a9567d",
+                  "fields": [
+                    {
+                      "name": "first_name",
+                      "expression": "`first_name`"
+                    },
+                    {
+                      "name": "sum(avg_idle_hours)",
+                      "expression": "SUM(`avg_idle_hours`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top 5 Drivers by Average Idle Hours",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "first_name",
+                  "displayName": "First Name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(avg_idle_hours)",
+                  "format": {
+                    "type": "number-plain",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 2
+                    },
+                    "abbreviation": "none"
+                  },
+                  "displayName": "Average Idle Hours",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "first_name",
+                  "displayName": "First Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "total-miles",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59648bf3",
+                  "fields": [
+                    {
+                      "name": "avg(total_miles)",
+                      "expression": "AVG(`total_miles`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "AVG MILES "
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(total_miles)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total-revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59648bf3",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showDescription": false,
+                "description": "",
+                "title": "Total Revenue",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_revenue)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 15,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "659eb4c4",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\">FUEL PURCHASES</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 17,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "total-cost",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "0868b571",
+                  "fields": [
+                    {
+                      "name": "sum(total_cost)",
+                      "expression": "SUM(`total_cost`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "TOTAL COST(TOTAL)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_cost)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "avg-price-per-gallon",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "0868b571",
+                  "fields": [
+                    {
+                      "name": "purchase_date",
+                      "expression": "`purchase_date`"
+                    },
+                    {
+                      "name": "avg(price_per_gallon)",
+                      "expression": "AVG(`price_per_gallon`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "AVG PRICE PER GALLON BY PURCHASE DAT"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(price_per_gallon)"
+                },
+                "target": {
+                  "fieldName": "purchase_date"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 18,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "ab24b14c",
+            "queries": [
+              {
+                "name": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dcde11bbcb82be1bff70556e6_purchase_date",
+                "query": {
+                  "datasetName": "0868b571",
+                  "fields": [
+                    {
+                      "name": "purchase_date",
+                      "expression": "`purchase_date`"
+                    },
+                    {
+                      "name": "purchase_date_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "purchase_date",
+                    "queryName": "dashboards/01f1162d8b87102b9ea68e187e43fac6/datasets/01f1162dcde11bbcb82be1bff70556e6_purchase_date"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 18,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "f5d7baf5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "0868b571",
+                  "fields": [
+                    {
+                      "name": "avg(gallons)",
+                      "expression": "AVG(`gallons`)"
+                    },
+                    {
+                      "name": "yearly(purchase_date)",
+                      "expression": "DATE_TRUNC(\"YEAR\", `purchase_date`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Monthly Trend of Total Fuel Gallons Purchased",
+                "showTitle": true
+              },
+              "widgetType": "area",
+              "encodings": {
+                "x": {
+                  "fieldName": "avg(gallons)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "yearly(purchase_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
